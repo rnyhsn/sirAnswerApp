@@ -94,8 +94,8 @@ const LeftSidebar = async () => {
       <h2 className="text-btnLink text-xl font-semibold border-b border-gray-600">Subject</h2>
       <div className="flex flex-col gap-2">
       {
-          categoryResp.payload?.map((category, index) => (
-              <Category title={category.name} slug={category.slug} key={index} />
+         categoryResp.success && categoryResp.statusCode === 200 && categoryResp.payload?.map((category: any, index) => (
+              <Category title={category?.name} slug={category?.slug} key={index} />
             ))
       }
     </div>
