@@ -95,7 +95,7 @@ const LeftSidebar = async () => {
       <div className="flex flex-col gap-2">
       {
          categoryResp.success && categoryResp.statusCode === 200 && categoryResp.payload?.map((category: any, index) => (
-              <Category title={category?.name} slug={category?.slug} key={index} />
+              <Category category={category} key={index} />
             ))
       }
     </div>

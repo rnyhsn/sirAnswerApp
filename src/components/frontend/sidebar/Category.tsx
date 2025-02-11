@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import React from 'react'
 
-const Category = ({title, slug}: {title: string, slug: string}) => {
+const Category = ({category}: {category: {title: string, slug: string}}) => {
   return (
-    <Link href={slug} >
-        {title}
+    <Link href={category.slug} >
+        {category.title}
     </Link>
   )
 }
