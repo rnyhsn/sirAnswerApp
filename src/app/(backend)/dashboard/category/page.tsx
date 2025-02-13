@@ -1,14 +1,17 @@
 import PageTitle from '@/components/backend/PageTitle'
 import { deleteCategory, getCategories } from '@/utils/actions/category'
+import Link from 'next/link';
 import { FaRegEdit } from "react-icons/fa";
 import { FaRegTrashCan } from "react-icons/fa6";
 
 
 const CategoryPage = async () => {
   const categoryResp = await getCategories();
+  console.log(categoryResp);
   if(!categoryResp.success && categoryResp.statusCode === 401) {
-    return <div className="h-[400px] w-full flex items-center justify-center">
-        <h1 className="text-5xl text-gray-300"> {categoryResp.message} </h1>
+    return <div className="h-[400px] w-full flex items-center justify-center flex-col gap-6">
+        <h1 className="text-4xl font-bold text-gray-500"> {categoryResp.message} </h1>
+        <Link href="/dashboard/category/add" className="text-xl px-8 py-2 rounded-md font-semibold bg-btnPrimary text-white">Add Category</Link>
     </div>
   }
   return (

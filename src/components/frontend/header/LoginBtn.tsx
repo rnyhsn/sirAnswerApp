@@ -5,7 +5,6 @@ import React from 'react'
 
 const LoginBtn = async () => {
     const session  = await auth();
-    console.log(session);
   return (
     <div>
     {

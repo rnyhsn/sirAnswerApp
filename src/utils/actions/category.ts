@@ -41,13 +41,13 @@ export const createCategory = async (preState: Response, formData: FormData) => 
 }
 
 
-export const getCategories = async () => {
+export const getCategories = async (query?: string) => {
 
     try {
         await connectToDB();
-        let categories = await Category.find().lean();
+        let categories = query ? await Category.find({name: { $regex: query, $options: "i" }}).lean() : await Category.find().lean();
         if(categories.length === 0) {
-            throw new Error("Category List is Empty. Add Category")
+            throw new Error("Category List is Empty")
         }
 
         let newCategories = categories.map((category) => ({...category, _id: String(category._id)}));
@@ -62,7 +62,7 @@ export const getCategories = async () => {
         return {
             success: false,
             message: error.message,
-            stausCode: 401
+            statusCode: 401
         }
     }
 }
@@ -134,16 +134,17 @@ export const createSubCategory = async (prevState: Response, formData: FormData)
 }
 
 
-export const getSubCategories = async () => {
+export const getSubCategories = async (query: string) => {
 
     try {
         await connectToDB();
-        const subCategories = await SubCategory.find().sort({createdAt: -1}).populate('parentCategory').lean();
+        const subCategories = query ? await SubCategory.find({name: {$regex: query, $options: "i" }}).lean() :  await SubCategory.find().sort({createdAt: -1}).populate('parentCategory').lean();
         if(subCategories.length === 0) {
             return {
                 success: true,
                 message: "No Sub Category is added. Add Sub Categories",
-                statusCode: 401
+                statusCode: 401,
+                payload: []
             }
         }
 

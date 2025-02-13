@@ -6,3 +6,11 @@ export interface Response {
     payload?: Record<string, unknown>,
     error?: Record<string, unknown>
 }
+
+
+export interface IUser {
+    name: string,
+    email: String,
+    image: string,
+    role: string 
+}

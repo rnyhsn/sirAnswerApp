@@ -1,8 +1,6 @@
 import { IoSearch } from "react-icons/io5";
 import { IoMdNotifications } from "react-icons/io";
 
-
-
 import Image from "next/image";
 import DarkToggle from "@/components/DarkToggle";
 import CreateBtn from "./CreateBtn";
@@ -13,6 +11,7 @@ import Link from "next/link";
 
 const Header = async () => {
   const session = await auth();
+  console.log(session);
   return (
     <div className="bg-blue-400">
       <div className="w-[90%] container flex items-center justify-between py-3">
@@ -30,7 +29,7 @@ const Header = async () => {
                 <DarkToggle />
                 <IoSearch size={32} />
                 <IoMdNotifications size={32} />
-                <CreateBtn />
+                <CreateBtn user={session?.user}  />
                 <div className="flex items-center gap-1">
                     <Image src="/coinIcon.svg" width={20} height={20} alt="coin" />
                     <span> 0 </span>

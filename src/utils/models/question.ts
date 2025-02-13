@@ -6,11 +6,18 @@ const questionSchema = new mongoose.Schema({
         type: String,
         required: true 
     },
-    questioneer: {
-        type: String,
-        required: true
+    categories: {
+        type: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'SubCategory'
+            }
+        ]
     },
-    email: {
+    answer: {
+        type: String 
+    },
+    qsnrEmail: {
         type: String,
         required: true 
     }

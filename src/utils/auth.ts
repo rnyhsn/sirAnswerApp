@@ -6,6 +6,7 @@ import Credentials from "next-auth/providers/credentials";
 import  bcrypt from 'bcryptjs';
 import { signInSchema } from "./validationSchemas";
 import { ZodError } from "zod";
+import { IUser } from "./types";
 
 export const {signIn, signOut, handlers, auth} = NextAuth({
     providers: [
@@ -75,7 +76,11 @@ export const {signIn, signOut, handlers, auth} = NextAuth({
         async signIn({user, account}) {
             await connectToDB();
             const existingUser = await User.findOne({email: user.email});
+           
+            
+
             if(!existingUser) {
+                (user as {role: string}).role = "USER";
                 let newUser = new User({
                     name: user.name,
                     email: user.email,
@@ -84,12 +89,22 @@ export const {signIn, signOut, handlers, auth} = NextAuth({
                 })
 
                 await newUser.save();
-                console.log("User created successfully");
+                
+            } else {
+                (user as {role: string}).role = existingUser.status;
             }
             return true;
         },
-        async session({session, user}) {
-            console.log("Callbacks:", user);
+        async jwt({token, user}) {
+            
+            if(user) {
+                token.role = (user as {role: string}).role;
+            }
+            return token;
+        },
+        async session({session, token}) {
+            session.user.role = token.role;
+       
 
             return session;
         }
