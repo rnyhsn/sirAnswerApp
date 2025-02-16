@@ -1,4 +1,4 @@
-"use server";
+import { config } from "./forcerun";
 import mongoose from "mongoose";
 
 
